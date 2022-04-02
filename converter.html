@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    src="https://unpkg.com/react@17.0.2/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const MinutesToHours = () => {
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const flip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              value={flipped ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}></input>
+          </div>
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              value={flipped ? amount : Math.round(amount / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              onChange={onChange}
+              disabled={!flipped}></input>
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={flip}>Flip</button>
+        </div>
+      );
+    };
+    const KmToMiles = () => {
+      const [amount, setAmount] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const flip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <label htmlFor="kilometers">Kilometers</label>
+            <input
+              value={flipped ? amount * 1.609344 : amount}
+              id="kilometers"
+              type="number"
+              placeholder="Kilometers"
+              onChange={onChange}
+              disabled={flipped}></input>
+          </div>
+          <div>
+            <label htmlFor="miles">Miles</label>
+            <input
+              value={flipped ? amount : amount / 1.609344}
+              id="miles"
+              type="number"
+              placeholder="Miles"
+              onChange={onChange}
+              disabled={!flipped}></input>
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={flip}>Flip</button>
+        </div>
+      );
+    };
+    const App = () => {
+      const [index, setIndex] = React.useState("xx");
+      const onChange = (event) => {
+        setIndex(event.target.value);
+      };
+      return (
+        <div>
+          <h1>Super Converter</h1>
+          <select value={index} onChange={onChange}>
+            <option value="xx">Select a converter you want</option>
+            <option value="0">Minutes to Hours</option>
+            <option value="1">Km to Miles</option>
+          </select>
+          <hr />
+          {index === "0" ? <MinutesToHours /> : null}
+          {index === "1" ? <KmToMiles /> : null}
+        </div>
+      );
+    };
+    const root = document.querySelector("#root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
